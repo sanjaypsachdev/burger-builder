@@ -45,9 +45,3 @@
       transform: scale(1);
   }
 }
-
-@media (max-width:810px) {
-  .BuildControls {
-    display: block;
-  }
-}

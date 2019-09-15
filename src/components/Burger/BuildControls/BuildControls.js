@@ -1,5 +1,6 @@
 import React from 'react';
 import BuildControl from './BuildControl/BuildControl';
+import PropTypes from 'prop-types';
 
 import classes from './BuildControls.module.css';
 
@@ -34,6 +35,20 @@ const buildControls = (props) => {
       </button>
     </div>
   );
+}
+
+buildControls.propTypes = {
+  price: PropTypes.number.isRequired,
+  purchasable: PropTypes.bool.isRequired,
+  disabledInfo: PropTypes.shape({
+    cheese: PropTypes.bool.isRequired,
+    salad: PropTypes.bool.isRequired,
+    bacon: PropTypes.bool.isRequired,
+    meat: PropTypes.bool.isRequired
+  }).isRequired,
+  ingredientAdded: PropTypes.func.isRequired,
+  ingredientRemoved: PropTypes.func.isRequired,
+  order: PropTypes.func.isRequired
 }
 
 export default buildControls;
