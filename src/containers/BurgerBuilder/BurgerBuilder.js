@@ -18,7 +18,6 @@ class BurgerBuilder extends Component {
   };
 
   componentDidMount() {
-    console.log("props inside BurgerBuilder.js", this.props);
     this.props.onInitIngredients();
   }
 
@@ -73,7 +72,6 @@ class BurgerBuilder extends Component {
   // }
 
   render() {
-    console.log('this.props.ingredients', this.props.ingredients);
     const disabledInfo = { 
       ...this.props.ingredients
     }
