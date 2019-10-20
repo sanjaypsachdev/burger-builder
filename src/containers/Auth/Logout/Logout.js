@@ -7,12 +7,10 @@ import * as actions from '../../../store/actions/index';
 export class Logout extends Component {
 
   componentDidMount() {
-    console.log('Logout > componentDidMount');
     this.props.logout()
 }
 
   render() {
-    console.log('Logout > render');
     return (
       <Redirect to="/" />
     )
