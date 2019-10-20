@@ -8,6 +8,11 @@ import * as actions from '../../store/actions/index';
 import Spinner from '../../components//UI/Spinner/Spinner';
 
 export class Orders extends Component {
+
+  componentDidMount() {
+    this.props.fetchOrders(this.props.token, this.props.userId);
+  }
+
   render() {
     let orders = <Spinner />;
     if (!this.props.loading) {
@@ -30,14 +35,16 @@ export class Orders extends Component {
 const mapStateToProps = state => {
   return {
     orders: state.order.orders,
-    loading: state.order.loading
+    loading: state.order.loading,
+    token: state.auth.token,
+    userId: state.auth.userId
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchOrders: dispatch(actions.fetchOrders)
-  }
+    fetchOrders: (token, userId) => dispatch(actions.fetchOrders(token, userId))
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, axios));
