@@ -1,4 +1,4 @@
-import React, { Component, Suspense, lazy } from 'react';
+import React, { useEffect, Suspense, lazy } from 'react';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -11,46 +11,45 @@ const Auth = lazy(() =>import('./containers/Auth/Auth'));
 const Checkout = lazy(() =>import('./containers/Checkout/Checkout'));
 const Orders = lazy(() =>import('./containers/Orders/Orders'));
 
-class App extends Component {
+const App = props => {
 
-  componentDidMount() {
-    this.props.onTryAutoSignup();
-  }
+  useEffect(() => {
+    props.onTryAutoSignup();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  render() {
-    let router = (
+  let router = (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Switch>
+        <Route path='/auth' component={Auth} />
+        <Route path='/' component={BurgerBuilder} />
+        <Redirect to='/' />
+      </Switch>
+    </Suspense>
+  );
+
+  if (props.isAuthenticated) {
+    router = (
       <Suspense fallback={<div>Loading...</div>}>
         <Switch>
+          <Route path='/checkout' component={Checkout} />
+          <Route path='/orders' component={Orders} />
           <Route path='/auth' component={Auth} />
+          <Route path='/logout' component={Logout} />
           <Route path='/' component={BurgerBuilder} />
           <Redirect to='/' />
         </Switch>
       </Suspense>
-    );
+    )
+  };
 
-    if (this.props.isAuthenticated) {
-      router = (
-        <Suspense fallback={<div>Loading...</div>}>
-          <Switch>
-            <Route path='/checkout' component={Checkout} />
-            <Route path='/orders' component={Orders} />
-            <Route path='/auth' component={Auth} />
-            <Route path='/logout' component={Logout} />
-            <Route path='/' component={BurgerBuilder} />
-            <Redirect to='/' />
-          </Switch>
-        </Suspense>
-      )
-    };
-
-    return (
-      <div>
-        <Layout>
-          {router}
-        </Layout>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <Layout>
+        {router}
+      </Layout>
+    </div>
+  );
 }
 
 const mapStateToProps = state => {
