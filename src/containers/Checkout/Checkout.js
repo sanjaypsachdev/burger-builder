@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 import ContactData from './ContactData/ContactData';
 
-class Checkout extends Component {
+const Checkout = props => {
   // state = {
   //   ingredients: null,
   //   totalPrice: 0
@@ -26,34 +26,32 @@ class Checkout extends Component {
   //   this.setState({ingredients: ingredients, totalPrice: price});
   // }
 
-  checkoutCancelledHandler = () => {
-    this.props.history.goBack();
+  const checkoutCancelledHandler = () => {
+    props.history.goBack();
   }
 
-  checkoutContinuedHandler = () => {
-    this.props.history.push('/checkout/contact-data');
+  const checkoutContinuedHandler = () => {
+    props.history.push('/checkout/contact-data');
   }
 
-  render() {
-    let summary = <Redirect to="/" />
-    if (this.props.ingredients) {
-      const purchasedRedirect = this.props.purchased ? <Redirect to="/" /> : null;
-      summary = (
-        <div>
-          { purchasedRedirect }
-          <CheckoutSummary
-            ingredients={this.props.ingredients}
-            checkoutCancelled={this.checkoutCancelledHandler}
-            checkoutContinued={this.checkoutContinuedHandler}
+  let summary = <Redirect to="/" />
+  if (props.ingredients) {
+    const purchasedRedirect = props.purchased ? <Redirect to="/" /> : null;
+    summary = (
+      <div>
+        { purchasedRedirect }
+        <CheckoutSummary
+          ingredients={props.ingredients}
+          checkoutCancelled={checkoutCancelledHandler}
+          checkoutContinued={checkoutContinuedHandler}
+        />
+        <Route
+          path={props.match.path + '/contact-data'}
+          component={ContactData} 
           />
-          <Route
-            path={this.props.match.path + '/contact-data'}
-            component={ContactData} 
-            />
-        </div>);
-    }
-    return summary;
+      </div>);
   }
+  return summary;
 }
 
 const mapStateToProps = state => {
