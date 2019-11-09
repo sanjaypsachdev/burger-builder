@@ -62,3 +62,6 @@ typings/
 
 # ignore the build folder
 build
+
+# ignore the firebase folder
+.firebase
