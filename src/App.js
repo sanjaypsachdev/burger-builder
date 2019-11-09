@@ -7,9 +7,9 @@ import Layout from './hoc/Layout/Layout';
 import Logout from './containers/Auth/Logout/Logout';
 import * as actions from './store/actions/index';
 
-const Auth = lazy(() =>import('./containers/Auth/Auth'));
-const Checkout = lazy(() =>import('./containers/Checkout/Checkout'));
-const Orders = lazy(() =>import('./containers/Orders/Orders'));
+const Auth = lazy(() => import('./containers/Auth/Auth'));
+const Checkout = lazy(() => import('./containers/Checkout/Checkout'));
+const Orders = lazy(() => import('./containers/Orders/Orders'));
 
 const App = props => {
 
